@@ -7,12 +7,18 @@
 
 import SwiftUI
 
-struct AllFonts: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-    }
+enum Fonts: String {
+    case poppins = "Poppins-Regular"
+    case longline = "LonglineQuartFREE"
+    case mitchela = "MitchaellaFreeModernUnique-Regu"
+    case noctis = "Noctis-ThinItalic"
+    case roasche = "RoashePersonalUse"
+    case southam = "SouthamDemo"
+    case angel = "Angeldemo-"
 }
 
-#Preview {
-    AllFonts()
+extension Font {
+    static func customFont(_ font: Fonts, size: CGFloat) -> Font {
+        return Font.custom(font.rawValue, size: size)
+    }
 }

@@ -11,6 +11,17 @@
 		4A326AB62BB489550069639B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A326AB52BB489550069639B /* ContentView.swift */; };
 		4A326AB82BB489580069639B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4A326AB72BB489580069639B /* Assets.xcassets */; };
 		4A326ABB2BB489580069639B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4A326ABA2BB489580069639B /* Preview Assets.xcassets */; };
+		4A326AC72BB4AAD90069639B /* DummyMarquee.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A326AC62BB4AAD80069639B /* DummyMarquee.swift */; };
+		4A326AC92BB4ABDD0069639B /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A326AC82BB4ABDD0069639B /* LoginView.swift */; };
+		4A326AD02BB4BCA30069639B /* mitchela.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4A326ACB2BB4BCA20069639B /* mitchela.ttf */; };
+		4A326AD12BB4BCA30069639B /* longline.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4A326ACC2BB4BCA20069639B /* longline.ttf */; };
+		4A326AD22BB4BCA30069639B /* Southam.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4A326ACD2BB4BCA30069639B /* Southam.otf */; };
+		4A326AD32BB4BCA30069639B /* roashce.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4A326ACE2BB4BCA30069639B /* roashce.otf */; };
+		4A326AD42BB4BCA30069639B /* noctis.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4A326ACF2BB4BCA30069639B /* noctis.otf */; };
+		4A326AD72BB4BD450069639B /* Poppins-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4A326AD62BB4BD450069639B /* Poppins-Regular.ttf */; };
+		4A326ADA2BB4BDA00069639B /* AllFonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A326AD92BB4BDA00069639B /* AllFonts.swift */; };
+		4A326ADE2BB4C25A0069639B /* AngelDemoRegular-Rpa03.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4A326ADD2BB4C25A0069639B /* AngelDemoRegular-Rpa03.ttf */; };
+		4A326AE02BB4CCF90069639B /* CountryCodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A326ADF2BB4CCF90069639B /* CountryCodes.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +30,18 @@
 		4A326AB52BB489550069639B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		4A326AB72BB489580069639B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4A326ABA2BB489580069639B /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		4A326AC62BB4AAD80069639B /* DummyMarquee.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummyMarquee.swift; sourceTree = "<group>"; };
+		4A326AC82BB4ABDD0069639B /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		4A326ACB2BB4BCA20069639B /* mitchela.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = mitchela.ttf; sourceTree = "<group>"; };
+		4A326ACC2BB4BCA20069639B /* longline.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = longline.ttf; sourceTree = "<group>"; };
+		4A326ACD2BB4BCA30069639B /* Southam.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Southam.otf; sourceTree = "<group>"; };
+		4A326ACE2BB4BCA30069639B /* roashce.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = roashce.otf; sourceTree = "<group>"; };
+		4A326ACF2BB4BCA30069639B /* noctis.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = noctis.otf; sourceTree = "<group>"; };
+		4A326AD52BB4BCDA0069639B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		4A326AD62BB4BD450069639B /* Poppins-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Regular.ttf"; sourceTree = "<group>"; };
+		4A326AD92BB4BDA00069639B /* AllFonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllFonts.swift; sourceTree = "<group>"; };
+		4A326ADD2BB4C25A0069639B /* AngelDemoRegular-Rpa03.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "AngelDemoRegular-Rpa03.ttf"; sourceTree = "<group>"; };
+		4A326ADF2BB4CCF90069639B /* CountryCodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryCodes.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -35,6 +58,7 @@
 		4A326AA72BB489550069639B = {
 			isa = PBXGroup;
 			children = (
+				4A326ACA2BB4BC900069639B /* Fonts */,
 				4A326AB22BB489550069639B /* QuikScan */,
 				4A326AB12BB489550069639B /* Products */,
 			);
@@ -51,6 +75,9 @@
 		4A326AB22BB489550069639B /* QuikScan */ = {
 			isa = PBXGroup;
 			children = (
+				4A326AD52BB4BCDA0069639B /* Info.plist */,
+				4A326AD82BB4BD850069639B /* Utils */,
+				4A326AC52BB4AABD0069639B /* Login */,
 				4A326AB32BB489550069639B /* QuikScanApp.swift */,
 				4A326AB52BB489550069639B /* ContentView.swift */,
 				4A326AB72BB489580069639B /* Assets.xcassets */,
@@ -65,6 +92,38 @@
 				4A326ABA2BB489580069639B /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		4A326AC52BB4AABD0069639B /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				4A326AC62BB4AAD80069639B /* DummyMarquee.swift */,
+				4A326AC82BB4ABDD0069639B /* LoginView.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		4A326ACA2BB4BC900069639B /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				4A326AD62BB4BD450069639B /* Poppins-Regular.ttf */,
+				4A326ACC2BB4BCA20069639B /* longline.ttf */,
+				4A326ADD2BB4C25A0069639B /* AngelDemoRegular-Rpa03.ttf */,
+				4A326ACB2BB4BCA20069639B /* mitchela.ttf */,
+				4A326ACF2BB4BCA30069639B /* noctis.otf */,
+				4A326ACE2BB4BCA30069639B /* roashce.otf */,
+				4A326ACD2BB4BCA30069639B /* Southam.otf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
+		4A326AD82BB4BD850069639B /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				4A326AD92BB4BDA00069639B /* AllFonts.swift */,
+				4A326ADF2BB4CCF90069639B /* CountryCodes.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -83,6 +142,8 @@
 			dependencies = (
 			);
 			name = QuikScan;
+			packageProductDependencies = (
+			);
 			productName = QuikScan;
 			productReference = 4A326AB02BB489550069639B /* QuikScan.app */;
 			productType = "com.apple.product-type.application";
@@ -111,6 +172,8 @@
 				Base,
 			);
 			mainGroup = 4A326AA72BB489550069639B;
+			packageReferences = (
+			);
 			productRefGroup = 4A326AB12BB489550069639B /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -125,8 +188,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4A326AD12BB4BCA30069639B /* longline.ttf in Resources */,
+				4A326AD32BB4BCA30069639B /* roashce.otf in Resources */,
+				4A326ADE2BB4C25A0069639B /* AngelDemoRegular-Rpa03.ttf in Resources */,
 				4A326ABB2BB489580069639B /* Preview Assets.xcassets in Resources */,
+				4A326AD42BB4BCA30069639B /* noctis.otf in Resources */,
 				4A326AB82BB489580069639B /* Assets.xcassets in Resources */,
+				4A326AD22BB4BCA30069639B /* Southam.otf in Resources */,
+				4A326AD02BB4BCA30069639B /* mitchela.ttf in Resources */,
+				4A326AD72BB4BD450069639B /* Poppins-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -137,8 +207,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4A326AC72BB4AAD90069639B /* DummyMarquee.swift in Sources */,
 				4A326AB62BB489550069639B /* ContentView.swift in Sources */,
+				4A326AC92BB4ABDD0069639B /* LoginView.swift in Sources */,
 				4A326AB42BB489550069639B /* QuikScanApp.swift in Sources */,
+				4A326ADA2BB4BDA00069639B /* AllFonts.swift in Sources */,
+				4A326AE02BB4CCF90069639B /* CountryCodes.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -205,6 +279,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -260,6 +335,7 @@
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_VERSION = 5.0;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -275,17 +351,19 @@
 				DEVELOPMENT_TEAM = X9QZ4KQXLR;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = QuikScan/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = scan.ios.QuikScan;
+				PRODUCT_BUNDLE_IDENTIFIER = call.SSML;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -304,17 +382,19 @@
 				DEVELOPMENT_TEAM = X9QZ4KQXLR;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = QuikScan/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = scan.ios.QuikScan;
+				PRODUCT_BUNDLE_IDENTIFIER = call.SSML;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
