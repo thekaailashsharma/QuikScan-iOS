@@ -12,9 +12,10 @@ struct LoginView: View {
     @State var phoneNumber: String = ""
     @State var countryCode: String = "IN"
     @State var smsCode: String = ""
+    @State var progressText: String = "You will be redirected !!"
     @State var isOTPVisible: Bool = false
     @State var isLoading: Bool = false
-    @StateObject var authManager = AuthManager()
+    @EnvironmentObject var authManager: AuthManager
     
     var body: some View {
         ZStack {
@@ -72,8 +73,8 @@ struct LoginView: View {
                     ZStack {
                         VStack {
                             EnterPhoneNumber(number: $phoneNumber, countryCode: $countryCode, smsCode: $smsCode, isOTPVisble: $isOTPVisible) {
-                                isLoading = true
                                 if !isOTPVisible {
+                                    isLoading = true
                                     authManager.startAuth(phoneNumber: "+\(getCountryCode(countryCode))\(phoneNumber)") { value in
                                         isLoading = false
                                         if value {
@@ -83,8 +84,12 @@ struct LoginView: View {
                                         }
                                     }
                                 } else {
+                                    isLoading = true
+                                    progressText = "Please Wait"
                                     authManager.verifyCode(smsCode: smsCode) { value in
+                                        isLoading = false
                                         if value {
+                                            authManager.getLoginStatus()
                                             print("Hurray")
                                         }
                                     }
@@ -109,8 +114,8 @@ struct LoginView: View {
             
             if isLoading {
                 ProgressView {
-                    Text("You will be redirected !!")
-                        .font(.customFont(.poppins, size: 35))
+                    Text(progressText)
+                        .font(.customFont(.poppins, size: 25))
                         .foregroundStyle(.white)
                 }
                 .animation(.bouncy, value: isLoading)
@@ -152,8 +157,8 @@ struct EnterPhoneNumber: View {
                             .font(.customFont(.poppins, size: 15))
                             .padding()
                     })
-                    .keyboardType(.decimalPad)
                     .submitLabel(.continue)
+                    .keyboardType(.numberPad)
                     .focused($isNumberActive)
                     .toolbar {
                         ToolbarItemGroup(placement: .keyboard) {
@@ -175,7 +180,8 @@ struct EnterPhoneNumber: View {
                             .stroke(.white.opacity(0.5))
                     }
                 }
-                .padding()
+//                .offset(y: isNumberActive || isOTPActive ? -60: 0)
+//                .padding()
             }
             else {
                 HStack {
@@ -184,7 +190,6 @@ struct EnterPhoneNumber: View {
                             .font(.customFont(.poppins, size: 15))
                             .padding()
                     })
-                    .keyboardType(.decimalPad)
                     .submitLabel(.go)
                     .focused($isOTPActive)
                     .toolbar {
@@ -198,6 +203,7 @@ struct EnterPhoneNumber: View {
                         }
                     }
                     .font(.customFont(.poppins, size: 18))
+                    .keyboardType(.numberPad)
                     .foregroundStyle(.white)
                     .padding()
                     .background(.black.opacity(0.6))
@@ -237,6 +243,10 @@ struct EnterPhoneNumber: View {
                 
             }
         }
+        .offset(y: isNumberActive || isOTPActive ? -100: 0)
+        .animation(.easeInOut, value: isNumberActive)
+        .animation(.easeInOut, value: isOTPActive)
+        .padding()
         .frame(width: 350, height: 300, alignment: .top)
         
     }

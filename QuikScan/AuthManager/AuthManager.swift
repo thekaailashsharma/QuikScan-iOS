@@ -11,6 +11,8 @@ import FirebaseAuth
 class AuthManager : ObservableObject {
     static let shared = AuthManager()
     private let auth = Auth.auth()
+    @Published var currentUser: User? = Auth.auth().currentUser
+    @Published var isLoggedIn: Bool = false
     private var verificationId: String?
     
     public func startAuth(phoneNumber: String, completion: @escaping (Bool) -> Void) {
@@ -18,7 +20,7 @@ class AuthManager : ObservableObject {
           .verifyPhoneNumber(phoneNumber, uiDelegate: nil) { [weak self] verificationID, error in
               Auth.auth().settings?.isAppVerificationDisabledForTesting = true
               guard let verificationId = verificationID, error == nil else {
-                  print("my error is \(error)")
+                  print("my error is \(String(describing: error))")
                   completion(false)
                   return
               }
@@ -26,6 +28,21 @@ class AuthManager : ObservableObject {
               completion(true)
           }
         
+    }
+    
+    public func signOut() {
+        try? Auth.auth().signOut()
+        getLoginStatus()
+    }
+    
+    public func getLoginStatus() {
+        if Auth.auth().currentUser == nil {
+            print("Login Status = \(isLoggedIn)")
+            isLoggedIn = true
+        } else {
+            print("Login Status = \(isLoggedIn)")
+            isLoggedIn = false
+        }
     }
     
     public func verifyCode(smsCode: String, completion: @escaping (Bool) -> Void) {
@@ -40,12 +57,13 @@ class AuthManager : ObservableObject {
           verificationCode: smsCode
         )
         
-        Auth.auth().signIn(with: credential) { authResult, error in
+        Auth.auth().signIn(with: credential) {[weak self] authResult, error in
             guard authResult != nil, error == nil else {
-                print("my error1 is \(error)")
+                print("my error1 is \(String(describing: error))")
                 completion(false)
                 return
             }
+            self?.isLoggedIn = true
             completion(true)
         }
     }

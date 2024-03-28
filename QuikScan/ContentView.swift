@@ -8,14 +8,34 @@
 import SwiftUI
 
 struct ContentView: View {
+    @StateObject var authManager = AuthManager()
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        NavigationStack {
+            VStack {
+                Image(systemName: "globe")
+                    .imageScale(.large)
+                    .foregroundStyle(.tint)
+                Text("Hello, world!")
+                Button {
+                    authManager.signOut()
+                } label: {
+                    Text("Sign Out")
+                }
+
+            }
+            .onAppear {
+                authManager.getLoginStatus()
+            }
+            .onChange(of: authManager.isLoggedIn, { oldValue, newValue in
+                print("Values = \(oldValue) \(newValue)")
+                authManager.getLoginStatus()
+            })
+            .fullScreenCover(isPresented: $authManager.isLoggedIn, content: {
+                LoginView()
+                    .environmentObject(authManager)
+            })
+            .padding()
         }
-        .padding()
     }
 }
 
