@@ -63,7 +63,7 @@ func countryFlag(_ countryCode: String) -> String {
 }
 
 func getCountryCode (_ country : String) -> String {
-    if let key = countryDictionary.first(where: { $0.value == country })?.key {
+    if let key = countryDictionary.first(where: { $0.key == country })?.value {
         return key
     }
     return ""
