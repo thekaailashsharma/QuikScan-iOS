@@ -7,6 +7,7 @@
 
 import SwiftUI
 import AVKit
+import CoreImage.CIFilterBuiltins
 
 struct FullScreenCameraView: View {
     @State var isScanning: Bool = false
@@ -15,7 +16,10 @@ struct FullScreenCameraView: View {
     @State private var cameraPermissions: Permissions = .idle
     @StateObject private var qrDelegate = QrScannerDelegate()
     @State private var isSafariViewPresented = false
+    @State private var isSafariViewAnimation = false
     @State private var sheetSize: PresentationDetent = .large
+    let context = CIContext()
+    let filter = CIFilter.qrCodeGenerator()
     
     var body: some View {
         ZStack {
@@ -33,7 +37,30 @@ struct FullScreenCameraView: View {
                             .stroke(.white, style: StrokeStyle(lineWidth: 5, lineCap: .round, lineJoin: .round))
                             .rotationEffect(.degrees(rotation))
                             .padding(.all, 65)
-                            .scaleEffect(isScanning ? 1.1: 0.9)
+                            .scaleEffect(isSafariViewAnimation ? 0.9 : isScanning ? 1.1: 0.9)
+                            .opacity(!isSafariViewAnimation ? 1 : 0)
+                            .animation(.bouncy, value: isSafariViewAnimation)
+                    }
+                    .overlay {
+                        Image(uiImage: generateQRCode(from: "https://abc.com"))
+                            .interpolation(.none)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 200, height: 200)
+                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                            .overlay {
+                                ForEach(1...4, id: \.self) { index in
+                                    let rotation = Double(index) * 90
+                                    RoundedRectangle(cornerRadius: 10, style: .circular)
+                                        .trim(from: 0.60, to: 0.65)
+                                        .stroke(.black.opacity(0.8), style: StrokeStyle(lineWidth: 5, lineCap: .round, lineJoin: .round))
+                                        .rotationEffect(.degrees(rotation))
+                                }
+                            }
+                            .opacity(isSafariViewAnimation ? 1 : 0)
+                            .animation(.bouncy, value: isSafariViewAnimation)
+                        
+                        
                     }
                 }
                 .frame(width: size.width, height: size.width, alignment: .center)
@@ -48,36 +75,65 @@ struct FullScreenCameraView: View {
             }
         }
         .popover(isPresented: Binding(
-            get: { isSafariViewPresented },
+            get: { isSafariViewPresented && qrDelegate.scannedCode != nil },
             set: { newValue in
                 if newValue == false {
-                    qrDelegate.scannedCode = nil // Reset scannedCode after dismissing Safari view
-                    isSafariViewPresented = newValue // Update state
+                    qrDelegate.scannedCode = nil
+                    isSafariViewPresented = newValue
+                    isSafariViewAnimation = false
                 }
             }), content: {
-                if let url = URL(string: qrDelegate.scannedCode ?? "") {
-                    SFSafariViewWrapper(url: url)
-                        .presentationDetents([.large, .medium], selection: $sheetSize)
-                        .ignoresSafeArea()
+                if isValidURL(qrDelegate.scannedCode ?? "") {
+                    if let url = URL(string: qrDelegate.scannedCode ?? "") {
+                        SFSafariViewWrapper(url: url)
+                            .presentationDetents([.large, .medium], selection: $sheetSize)
+                            .ignoresSafeArea()
+                    }
+                } else {
+                    Text(qrDelegate.scannedCode ?? "OK")
+                        .foregroundStyle(.black)
                 }
             })
         .onChange(of: qrDelegate.scannedCode, { oldValue, newValue in
-            if isValidURL(qrDelegate.scannedCode ?? "") {
-                print("is Inside \(isSafariViewPresented)")
-                isSafariViewPresented = true
+            withAnimation(.easeInOut(duration: 0.6)) {
+                isSafariViewAnimation = true
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                    withAnimation(.easeInOut(duration: 0.6)) {
+                        isSafariViewAnimation = false
+                        
+                        isSafariViewPresented = true
+                    }
+                    
+                    
+                }
             }
+            
         })
         .ignoresSafeArea()
     }
     
     func isValidURL(_ string: String) -> Bool {
-        // Attempt to create a URL from the given string
-        if let k = URL(string: string) {
-            print("is Inside URl \(k)")
-            return true
-        } else {
+        guard let url = URL(string: string),
+              let scheme = url.scheme?.lowercased() else {
+            print("Error creating URL")
             return false
         }
+        
+        // Check if the scheme is HTTP or HTTPS
+        return scheme == "http" || scheme == "https"
+    }
+    
+    
+    func generateQRCode(from string: String) -> UIImage {
+        filter.message = Data(string.utf8)
+        
+        if let outputImage = filter.outputImage {
+            if let cgImage = context.createCGImage(outputImage, from: outputImage.extent) {
+                return UIImage(cgImage: cgImage)
+            }
+        }
+        
+        return UIImage(systemName: "xmark.circle") ?? UIImage()
     }
     
     func setupCamera() {
