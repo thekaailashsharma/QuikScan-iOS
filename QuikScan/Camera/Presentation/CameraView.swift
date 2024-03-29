@@ -42,7 +42,7 @@ struct FullScreenCameraView: View {
                             .animation(.bouncy, value: isSafariViewAnimation)
                     }
                     .overlay {
-                        Image(uiImage: generateQRCode(from: "https://abc.com"))
+                        Image(uiImage: generateQRCode(from: qrDelegate.scannedCode ?? "https://abc.com"))
                             .interpolation(.none)
                             .resizable()
                             .scaledToFit()
@@ -75,7 +75,7 @@ struct FullScreenCameraView: View {
             }
         }
         .popover(isPresented: Binding(
-            get: { isSafariViewPresented && qrDelegate.scannedCode != nil },
+            get: { isSafariViewPresented },
             set: { newValue in
                 if newValue == false {
                     qrDelegate.scannedCode = nil
@@ -83,28 +83,41 @@ struct FullScreenCameraView: View {
                     isSafariViewAnimation = false
                 }
             }), content: {
-                if isValidURL(qrDelegate.scannedCode ?? "") {
-                    if let url = URL(string: qrDelegate.scannedCode ?? "") {
-                        SFSafariViewWrapper(url: url)
-                            .presentationDetents([.large, .medium], selection: $sheetSize)
-                            .ignoresSafeArea()
+                if qrDelegate.scannedCode != nil {
+                    if isValidURL(qrDelegate.scannedCode ?? "") {
+                        if let url = URL(string: qrDelegate.scannedCode ?? "") {
+                            SFSafariViewWrapper(url: url)
+                                .presentationDetents([.large, .medium], selection: $sheetSize)
+                                .ignoresSafeArea()
+                        }
+                    } else {
+                        NavigationStack {
+                            ScrollView {
+                                VStack {
+                                    Spacer()
+                                    Text(qrDelegate.scannedCode ?? "OK")
+                                        .foregroundStyle(.white)
+                                        .font(.customFont(.poppins, size: 22))
+                                        .padding()
+                                        .textSelection(.enabled)
+                                    Spacer()
+                                }
+                            }
+                            .navigationTitle("Your Barcode contains -")
+                        }
                     }
-                } else {
-                    Text(qrDelegate.scannedCode ?? "OK")
-                        .foregroundStyle(.black)
                 }
             })
         .onChange(of: qrDelegate.scannedCode, { oldValue, newValue in
-            withAnimation(.easeInOut(duration: 0.6)) {
-                isSafariViewAnimation = true
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                    withAnimation(.easeInOut(duration: 0.6)) {
-                        isSafariViewAnimation = false
-                        
-                        isSafariViewPresented = true
+            if qrDelegate.scannedCode != nil {
+                withAnimation(.easeInOut(duration: 0.6)) {
+                    isSafariViewAnimation = true
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                        withAnimation(.easeInOut(duration: 0.6)) {
+                            isSafariViewAnimation = false
+                            isSafariViewPresented = true
+                        }
                     }
-                    
-                    
                 }
             }
             
