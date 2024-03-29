@@ -58,6 +58,7 @@ struct FullScreenCameraView: View {
                 if let url = URL(string: qrDelegate.scannedCode ?? "") {
                     SFSafariViewWrapper(url: url)
                         .presentationDetents([.large, .medium], selection: $sheetSize)
+                        .ignoresSafeArea()
                 }
             })
         .onChange(of: qrDelegate.scannedCode, { oldValue, newValue in
