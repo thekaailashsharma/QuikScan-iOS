@@ -10,6 +10,7 @@
 		4A27509A2BB74F5400C22C9F /* CameraViewRepresetable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A2750992BB74F5400C22C9F /* CameraViewRepresetable.swift */; };
 		4A27509D2BB74FE500C22C9F /* CameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A27509C2BB74FE500C22C9F /* CameraView.swift */; };
 		4A27509F2BB7607000C22C9F /* QrScannerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A27509E2BB7607000C22C9F /* QrScannerDelegate.swift */; };
+		4A2750A22BB7643800C22C9F /* SFSafariViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A2750A12BB7643800C22C9F /* SFSafariViewController.swift */; };
 		4A326AB42BB489550069639B /* QuikScanApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A326AB32BB489550069639B /* QuikScanApp.swift */; };
 		4A326AB62BB489550069639B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A326AB52BB489550069639B /* ContentView.swift */; };
 		4A326AB82BB489580069639B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4A326AB72BB489580069639B /* Assets.xcassets */; };
@@ -37,6 +38,7 @@
 		4A2750992BB74F5400C22C9F /* CameraViewRepresetable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewRepresetable.swift; sourceTree = "<group>"; };
 		4A27509C2BB74FE500C22C9F /* CameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraView.swift; sourceTree = "<group>"; };
 		4A27509E2BB7607000C22C9F /* QrScannerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QrScannerDelegate.swift; sourceTree = "<group>"; };
+		4A2750A12BB7643800C22C9F /* SFSafariViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SFSafariViewController.swift; sourceTree = "<group>"; };
 		4A326AB02BB489550069639B /* QuikScan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QuikScan.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A326AB32BB489550069639B /* QuikScanApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuikScanApp.swift; sourceTree = "<group>"; };
 		4A326AB52BB489550069639B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -91,6 +93,14 @@
 			path = Presentation;
 			sourceTree = "<group>";
 		};
+		4A2750A02BB7642100C22C9F /* SafariView */ = {
+			isa = PBXGroup;
+			children = (
+				4A2750A12BB7643800C22C9F /* SFSafariViewController.swift */,
+			);
+			path = SafariView;
+			sourceTree = "<group>";
+		};
 		4A326AA72BB489550069639B = {
 			isa = PBXGroup;
 			children = (
@@ -114,6 +124,7 @@
 			isa = PBXGroup;
 			children = (
 				4A326AD52BB4BCDA0069639B /* Info.plist */,
+				4A2750A02BB7642100C22C9F /* SafariView */,
 				4A2750982BB74F3E00C22C9F /* Camera */,
 				4A4E8CA32BB6007D000FBBC9 /* AuthManager */,
 				4A326AD82BB4BD850069639B /* Utils */,
@@ -275,6 +286,7 @@
 				4A326AB62BB489550069639B /* ContentView.swift in Sources */,
 				4A326AC92BB4ABDD0069639B /* LoginView.swift in Sources */,
 				4A326AB42BB489550069639B /* QuikScanApp.swift in Sources */,
+				4A2750A22BB7643800C22C9F /* SFSafariViewController.swift in Sources */,
 				4A326ADA2BB4BDA00069639B /* AllFonts.swift in Sources */,
 				4A27509F2BB7607000C22C9F /* QrScannerDelegate.swift in Sources */,
 				4A326AE02BB4CCF90069639B /* CountryCodes.swift in Sources */,

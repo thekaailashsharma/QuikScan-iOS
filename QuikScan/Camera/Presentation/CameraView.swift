@@ -13,7 +13,9 @@ struct FullScreenCameraView: View {
     @State private var session: AVCaptureSession = .init()
     @State private var output: AVCaptureMetadataOutput = .init()
     @State private var cameraPermissions: Permissions = .idle
-    @State private var qrDelegate = QrScannerDelegate()
+    @StateObject private var qrDelegate = QrScannerDelegate()
+    @State private var isSafariViewPresented = false
+    @State private var sheetSize: PresentationDetent = .large
     
     var body: some View {
         ZStack {
@@ -45,7 +47,36 @@ struct FullScreenCameraView: View {
                 
             }
         }
+        .popover(isPresented: Binding(
+            get: { isSafariViewPresented },
+            set: { newValue in
+                if newValue == false {
+                    qrDelegate.scannedCode = nil // Reset scannedCode after dismissing Safari view
+                    isSafariViewPresented = newValue // Update state
+                }
+            }), content: {
+                if let url = URL(string: qrDelegate.scannedCode ?? "") {
+                    SFSafariViewWrapper(url: url)
+                        .presentationDetents([.large, .medium], selection: $sheetSize)
+                }
+            })
+        .onChange(of: qrDelegate.scannedCode, { oldValue, newValue in
+            if isValidURL(qrDelegate.scannedCode ?? "") {
+                print("is Inside \(isSafariViewPresented)")
+                isSafariViewPresented = true
+            }
+        })
         .ignoresSafeArea()
+    }
+    
+    func isValidURL(_ string: String) -> Bool {
+        // Attempt to create a URL from the given string
+        if let k = URL(string: string) {
+            print("is Inside URl \(k)")
+            return true
+        } else {
+            return false
+        }
     }
     
     func setupCamera() {
