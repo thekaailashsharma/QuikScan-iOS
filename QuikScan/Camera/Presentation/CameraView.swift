@@ -82,7 +82,7 @@ struct FullScreenCameraView: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .onAppear(perform: {
                     checkCameraPermission()
-                    withAnimation(.bouncy(duration: 1.6).repeatForever(autoreverses: true)) {
+                    withAnimation(.bouncy(duration: 0.9).repeatForever(autoreverses: true)) {
                         isScanning.toggle()
                     }
                 })
@@ -202,6 +202,9 @@ struct FullScreenCameraView: View {
         isEmailViewPresented = false
         isMessageViewPresented = false
         isContactsViewPresented = false
+        withAnimation(.bouncy(duration: 0.9).repeatForever(autoreverses: true)) {
+            isScanning.toggle()
+        }
     }
     
     func generateQRCode(from string: String) -> UIImage {
