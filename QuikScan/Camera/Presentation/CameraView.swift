@@ -10,14 +10,29 @@ import AVKit
 import CoreImage.CIFilterBuiltins
 
 struct FullScreenCameraView: View {
+    @StateObject private var cameraViewModel = CameraViewModel()
+    @StateObject var qrDelegate = QrScannerDelegate()
+    
+    @State var session: AVCaptureSession = .init()
     @State var isScanning: Bool = false
-    @State private var session: AVCaptureSession = .init()
-    @State private var output: AVCaptureMetadataOutput = .init()
-    @State private var cameraPermissions: Permissions = .idle
-    @StateObject private var qrDelegate = QrScannerDelegate()
     @State private var isSafariViewPresented = false
     @State private var isSafariViewAnimation = false
+    @State private var isCallingViewPresented = false
+    @State private var phoneNumber: String? = nil
+    @State private var isTextViewPresented = false
+    @State private var email: Email? = nil
+    @State private var isEmailViewPresented = false
+    @State private var message: SMSMessage? = nil
+    @State private var isMessageViewPresented = false
+    @State private var vCard: VCard = VCard()
+    @State private var isContactsViewPresented = false
+    
+    @State private var text: String? = nil
+    
     @State private var sheetSize: PresentationDetent = .large
+    @State private var qrCodeInfo: QRCodeInfo = .init(type: .none)
+    @State var output: AVCaptureMetadataOutput = .init()
+    @State var cameraPermissions: Permissions = .idle
     let context = CIContext()
     let filter = CIFilter.qrCodeGenerator()
     
@@ -29,7 +44,7 @@ struct FullScreenCameraView: View {
             GeometryReader { proxy in
                 let size = proxy.size
                 ZStack {
-                    
+                     
                     ForEach(1...4, id: \.self) { index in
                         let rotation = Double(index) * 90
                         RoundedRectangle(cornerRadius: 10, style: .circular)
@@ -78,44 +93,97 @@ struct FullScreenCameraView: View {
             get: { isSafariViewPresented },
             set: { newValue in
                 if newValue == false {
-                    qrDelegate.scannedCode = nil
-                    isSafariViewPresented = newValue
-                    isSafariViewAnimation = false
+                   resetVariables()
                 }
             }), content: {
                 if qrDelegate.scannedCode != nil {
-                    if isValidURL(qrDelegate.scannedCode ?? "") {
+                    if cameraViewModel.isValidURL(qrDelegate.scannedCode ?? "") {
                         if let url = URL(string: qrDelegate.scannedCode ?? "") {
                             SFSafariViewWrapper(url: url)
                                 .presentationDetents([.large, .medium], selection: $sheetSize)
                                 .ignoresSafeArea()
                         }
-                    } else {
-                        NavigationStack {
-                            ScrollView {
-                                VStack {
-                                    Spacer()
-                                    Text(qrDelegate.scannedCode ?? "OK")
-                                        .foregroundStyle(.white)
-                                        .font(.customFont(.poppins, size: 22))
-                                        .padding()
-                                        .textSelection(.enabled)
-                                    Spacer()
-                                }
-                            }
-                            .navigationTitle("Your Barcode contains -")
-                        }
                     }
                 }
             })
+        .popover(isPresented: Binding(
+            get: { isCallingViewPresented },
+            set: { newValue in
+                if newValue == false {
+                    resetVariables()
+                }
+            }), content: {
+                PhoneView(phoneNumber: $phoneNumber)
+                    .environmentObject(cameraViewModel)
+            })
+        .popover(isPresented: Binding(
+            get: { isTextViewPresented },
+            set: { newValue in
+                if newValue == false {
+                    resetVariables()
+                }
+            }), content: {
+                NonUrlView(text: $text)
+            })
+        .popover(isPresented: Binding(
+            get: { isEmailViewPresented },
+            set: { newValue in
+                if newValue == false {
+                    resetVariables()
+                }
+            }), content: {
+                EmailView(emailData: $email, isEmailViewVisible: $isEmailViewPresented)
+            })
+        .popover(isPresented: Binding(
+            get: { isMessageViewPresented },
+            set: { newValue in
+                if newValue == false {
+                    resetVariables()
+                }
+            }), content: {
+                MessageView(messageData: $message, isSMSViewVisible: $isMessageViewPresented)
+            })
+        .fullScreenCover(isPresented: Binding(
+            get: { isContactsViewPresented },
+            set: { newValue in
+                if newValue == false {
+                    resetVariables()
+                }
+            }), content: {
+                ContactsView(vCard: $vCard, isVCardVisible: $isContactsViewPresented)
+                    .environmentObject(cameraViewModel)
+            })
         .onChange(of: qrDelegate.scannedCode, { oldValue, newValue in
             if qrDelegate.scannedCode != nil {
-                withAnimation(.easeInOut(duration: 0.6)) {
+                isMessageViewPresented = false
+                isEmailViewPresented = false
+                withAnimation(.bouncy(duration: 0.3)) {
                     isSafariViewAnimation = true
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                        withAnimation(.easeInOut(duration: 0.6)) {
+                    cameraViewModel.qrCodeInfo = cameraViewModel.parseQRCode(qrDelegate.scannedCode ?? "OK")
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
+                        withAnimation(.bouncy(duration: 0.3)) {
                             isSafariViewAnimation = false
-                            isSafariViewPresented = true
+                            switch cameraViewModel.qrCodeInfo.type {
+                            case .text(let string):
+                                text = string
+                                isTextViewPresented = true
+                            case .url(_):
+                                isSafariViewPresented = true
+                            case .vcard(let vCardValue):
+                                vCard = vCardValue
+                                isContactsViewPresented = true
+                            case .email(let emailValue):
+                                email = emailValue
+                                isEmailViewPresented = true
+                            case .phoneNumber(let string):
+                                phoneNumber = string
+                                isCallingViewPresented = true
+                            case .sms(let messageValue):
+                                message = messageValue
+                                isMessageViewPresented = true
+                            case .none:
+                               break
+                            }
                         }
                     }
                 }
@@ -125,17 +193,16 @@ struct FullScreenCameraView: View {
         .ignoresSafeArea()
     }
     
-    func isValidURL(_ string: String) -> Bool {
-        guard let url = URL(string: string),
-              let scheme = url.scheme?.lowercased() else {
-            print("Error creating URL")
-            return false
-        }
-        
-        // Check if the scheme is HTTP or HTTPS
-        return scheme == "http" || scheme == "https"
+    func resetVariables() {
+        qrDelegate.scannedCode = nil
+        isSafariViewPresented = false
+        isSafariViewAnimation = false
+        isCallingViewPresented = false
+        isTextViewPresented = false
+        isEmailViewPresented = false
+        isMessageViewPresented = false
+        isContactsViewPresented = false
     }
-    
     
     func generateQRCode(from string: String) -> UIImage {
         filter.message = Data(string.utf8)
@@ -162,7 +229,7 @@ struct FullScreenCameraView: View {
             output.metadataObjectTypes = [.aztec, .catBody, .code128, .code39, .code39Mod43, .code93, .dataMatrix, .dogBody, .ean13, .ean8, .interleaved2of5, .pdf417, .qr, .salientObject, .upce]
             output.setMetadataObjectsDelegate(qrDelegate, queue: .main)
             session.commitConfiguration()
-            DispatchQueue.global(qos: .background).async {
+            DispatchQueue.global(qos: .background).async { [self] in
                 session.startRunning()
             }
             
@@ -193,13 +260,7 @@ struct FullScreenCameraView: View {
             }
         }
     }
-}
-
-
-enum Permissions: String {
-    case idle = "Not Determined"
-    case approved = "Access Granted"
-    case denied = "Access Denied"
+    
 }
 
 #Preview {

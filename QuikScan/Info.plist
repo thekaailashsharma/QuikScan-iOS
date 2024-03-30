@@ -23,5 +23,12 @@
 		<string>Poppins-Regular.ttf</string>
 		<string>AngelDemoRegular-Rpa03.ttf</string>
 	</array>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>fetch</string>
+		<string>processing</string>
+		<string>push-to-talk</string>
+		<string>voip</string>
+	</array>
 </dict>
 </plist>

@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4A010B3C2BB859780028A755 /* PhoneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A010B3B2BB859780028A755 /* PhoneView.swift */; };
+		4A010B3E2BB85A3F0028A755 /* EmailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A010B3D2BB85A3F0028A755 /* EmailView.swift */; };
+		4A010B402BB869960028A755 /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A010B3F2BB869960028A755 /* MessageView.swift */; };
+		4A010B422BB8744E0028A755 /* ContactsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A010B412BB8744E0028A755 /* ContactsView.swift */; };
 		4A27509A2BB74F5400C22C9F /* CameraViewRepresetable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A2750992BB74F5400C22C9F /* CameraViewRepresetable.swift */; };
 		4A27509D2BB74FE500C22C9F /* CameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A27509C2BB74FE500C22C9F /* CameraView.swift */; };
 		4A27509F2BB7607000C22C9F /* QrScannerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A27509E2BB7607000C22C9F /* QrScannerDelegate.swift */; };
@@ -32,9 +36,16 @@
 		4A4E8CA22BB5FE3B000FBBC9 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 4A4E8CA12BB5FE3B000FBBC9 /* FirebaseAuth */; };
 		4A4E8CA52BB60093000FBBC9 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4E8CA42BB60093000FBBC9 /* AuthManager.swift */; };
 		4A4E8CAD2BB6128D000FBBC9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4A4E8CAC2BB6128C000FBBC9 /* GoogleService-Info.plist */; };
+		4A6671B82BB84A8100F9B10F /* CameraViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A6671B72BB84A8100F9B10F /* CameraViewModel.swift */; };
+		4A6671BB2BB84ADD00F9B10F /* CameraModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A6671BA2BB84ADC00F9B10F /* CameraModels.swift */; };
+		4A6671BD2BB8519C00F9B10F /* NonUrlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A6671BC2BB8519C00F9B10F /* NonUrlView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4A010B3B2BB859780028A755 /* PhoneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneView.swift; sourceTree = "<group>"; };
+		4A010B3D2BB85A3F0028A755 /* EmailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailView.swift; sourceTree = "<group>"; };
+		4A010B3F2BB869960028A755 /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
+		4A010B412BB8744E0028A755 /* ContactsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsView.swift; sourceTree = "<group>"; };
 		4A2750992BB74F5400C22C9F /* CameraViewRepresetable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewRepresetable.swift; sourceTree = "<group>"; };
 		4A27509C2BB74FE500C22C9F /* CameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraView.swift; sourceTree = "<group>"; };
 		4A27509E2BB7607000C22C9F /* QrScannerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QrScannerDelegate.swift; sourceTree = "<group>"; };
@@ -58,6 +69,9 @@
 		4A326ADF2BB4CCF90069639B /* CountryCodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryCodes.swift; sourceTree = "<group>"; };
 		4A4E8CA42BB60093000FBBC9 /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		4A4E8CAC2BB6128C000FBBC9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		4A6671B72BB84A8100F9B10F /* CameraViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewModel.swift; sourceTree = "<group>"; };
+		4A6671BA2BB84ADC00F9B10F /* CameraModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraModels.swift; sourceTree = "<group>"; };
+		4A6671BC2BB8519C00F9B10F /* NonUrlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonUrlView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +94,8 @@
 			children = (
 				4A27509E2BB7607000C22C9F /* QrScannerDelegate.swift */,
 				4A2750992BB74F5400C22C9F /* CameraViewRepresetable.swift */,
+				4A6671B72BB84A8100F9B10F /* CameraViewModel.swift */,
+				4A6671B92BB84AC200F9B10F /* Models */,
 				4A27509B2BB74FCF00C22C9F /* Presentation */,
 			);
 			path = Camera;
@@ -89,6 +105,11 @@
 			isa = PBXGroup;
 			children = (
 				4A27509C2BB74FE500C22C9F /* CameraView.swift */,
+				4A6671BC2BB8519C00F9B10F /* NonUrlView.swift */,
+				4A010B3B2BB859780028A755 /* PhoneView.swift */,
+				4A010B3D2BB85A3F0028A755 /* EmailView.swift */,
+				4A010B3F2BB869960028A755 /* MessageView.swift */,
+				4A010B412BB8744E0028A755 /* ContactsView.swift */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -192,6 +213,14 @@
 			path = AuthManager;
 			sourceTree = "<group>";
 		};
+		4A6671B92BB84AC200F9B10F /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				4A6671BA2BB84ADC00F9B10F /* CameraModels.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -280,14 +309,21 @@
 			buildActionMask = 2147483647;
 			files = (
 				4A326AC72BB4AAD90069639B /* DummyMarquee.swift in Sources */,
+				4A010B3C2BB859780028A755 /* PhoneView.swift in Sources */,
 				4A27509A2BB74F5400C22C9F /* CameraViewRepresetable.swift in Sources */,
 				4A4E8CA52BB60093000FBBC9 /* AuthManager.swift in Sources */,
 				4A27509D2BB74FE500C22C9F /* CameraView.swift in Sources */,
+				4A010B402BB869960028A755 /* MessageView.swift in Sources */,
 				4A326AB62BB489550069639B /* ContentView.swift in Sources */,
+				4A6671BB2BB84ADD00F9B10F /* CameraModels.swift in Sources */,
+				4A6671BD2BB8519C00F9B10F /* NonUrlView.swift in Sources */,
+				4A6671B82BB84A8100F9B10F /* CameraViewModel.swift in Sources */,
 				4A326AC92BB4ABDD0069639B /* LoginView.swift in Sources */,
 				4A326AB42BB489550069639B /* QuikScanApp.swift in Sources */,
 				4A2750A22BB7643800C22C9F /* SFSafariViewController.swift in Sources */,
 				4A326ADA2BB4BDA00069639B /* AllFonts.swift in Sources */,
+				4A010B3E2BB85A3F0028A755 /* EmailView.swift in Sources */,
+				4A010B422BB8744E0028A755 /* ContactsView.swift in Sources */,
 				4A27509F2BB7607000C22C9F /* QrScannerDelegate.swift in Sources */,
 				4A326AE02BB4CCF90069639B /* CountryCodes.swift in Sources */,
 			);
@@ -430,6 +466,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = QuikScan/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "";
+				INFOPLIST_KEY_NSContactsUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -462,6 +499,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = QuikScan/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "";
+				INFOPLIST_KEY_NSContactsUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

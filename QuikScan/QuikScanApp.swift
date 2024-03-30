@@ -30,8 +30,11 @@ struct QuikScanApp: App {
     
     var body: some Scene {
         WindowGroup {
-//            ContentView()
-            FullScreenCameraView()
+            NavigationStack {
+                //            ContentView()
+                FullScreenCameraView()
+                //            ContactsView()
+            }
         }
     }
 }
