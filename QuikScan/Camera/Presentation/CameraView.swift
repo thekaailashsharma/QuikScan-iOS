@@ -247,7 +247,11 @@ struct FullScreenCameraView: View {
             case .notDetermined:
                 if await AVCaptureDevice.requestAccess(for: .video) {
                     cameraPermissions = .approved
-                    setupCamera()
+                    if session.inputs.isEmpty {
+                        setupCamera()
+                    } else {
+                        session.startRunning()
+                    }
                 } else {
                     cameraPermissions = .denied
                 }
