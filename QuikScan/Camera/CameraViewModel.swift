@@ -201,11 +201,11 @@ class CameraViewModel: ObservableObject {
         case .url(let url):
             switch url.host {
             case "linkedin.com":
-                return .urlLinkedIn
+                return .linkedIn
             case "medium.com":
-                return .urlMedium
+                return .medium
             case "twitter.com", "x.com":
-                return .urlTwitter
+                return .twitter
             case "github.com":
                 return .urlGithub
             case "facebook.com":
@@ -215,7 +215,7 @@ class CameraViewModel: ObservableObject {
             case "instagram.com":
                 return .urlInstagram
             default:
-                return .urlNone
+                return .url
             }
         case .email:
             return .barMail

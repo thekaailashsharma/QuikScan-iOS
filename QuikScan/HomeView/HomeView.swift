@@ -85,7 +85,7 @@ struct ItemView: View {
             HStack(alignment: .center) {
                 if let image = imageType {
                     Image(image.rawValue)
-                        .renderingMode(image == .urlGithub || image == .urlNone || image == .urlMedium || image == .urlTwitter ? .template : .original)
+                        .renderingMode(image == .urlGithub || image == .url || image == .medium || image == .twitter ? .template : .original)
                         .resizable()
                         .foregroundStyle(.white.opacity(0.6))
                         .frame(width: 50, height: 40)
@@ -95,24 +95,20 @@ struct ItemView: View {
                     
                     VStack(alignment: .listRowSeparatorLeading) {
                         
-                        Text(image.rawValue)
-                            .foregroundStyle(.white.opacity(0.6))
-                            .font(.customFont(.poppins, size: 10))
-                        
                         switch image {
-                        case .urlNone:
+                        case .url:
                             Text(item.name.truncate(length: 30))
                                 .foregroundStyle(.white)
                                 .font(.customFont(.poppins, size: 13))
-                        case .urlLinkedIn:
+                        case .linkedIn:
                             Text(item.name.truncate(length: 30))
                                 .foregroundStyle(.white)
                                 .font(.customFont(.poppins, size: 13))
-                        case .urlMedium:
+                        case .medium:
                             Text(item.name.truncate(length: 30))
                                 .foregroundStyle(.white)
                                 .font(.customFont(.poppins, size: 13))
-                        case .urlTwitter:
+                        case .twitter:
                             Text(item.name.truncate(length: 30))
                                 .foregroundStyle(.white)
                                 .font(.customFont(.poppins, size: 13))
@@ -175,8 +171,24 @@ struct ItemView: View {
                                 .foregroundStyle(.white)
                                 .font(.customFont(.poppins, size: 13))
                         }
+                        
                     }
                     .padding(.horizontal, 4)
+                    
+                    VStack {
+                        HStack {
+                            Spacer()
+                            Button {
+                                
+                            } label: {
+                                Text(image.rawValue)
+                                    .foregroundStyle(.primary)
+                                    .font(.customFont(.poppins, size: 10))
+                            }
+                            .buttonStyle(BorderedProminentButtonStyle())
+                        }
+                    }
+                    
                 }
             }
         }
