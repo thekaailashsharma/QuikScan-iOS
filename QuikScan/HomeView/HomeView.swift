@@ -28,6 +28,7 @@ struct HomeView: View {
                     }
                 }
             }
+            .scrollIndicators(.hidden)
             .searchable(text: $cameraViewModel.searchText, prompt: "Search Your Barcodes")
             .listRowSeparator(.hidden)
             .listRowBackground(Color.black.opacity(0.85))
