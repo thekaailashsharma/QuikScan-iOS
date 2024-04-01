@@ -13,6 +13,7 @@ import Contacts
 class CameraViewModel: ObservableObject {
     
     @Published var qrCodeInfo: QRCodeInfo = .init(type: .none)
+    @Published var searchText: String = ""
     
     func parseQRCode(_ data: String) -> QRCodeInfo {
         if data.hasPrefix("BEGIN:VCARD") && data.contains("END:VCARD") {
@@ -203,13 +204,13 @@ class CameraViewModel: ObservableObject {
                 return .urlLinkedIn
             case "medium.com":
                 return .urlMedium
-            case "twitter.com":
+            case "twitter.com", "x.com":
                 return .urlTwitter
             case "github.com":
                 return .urlGithub
             case "facebook.com":
                 return .urlFacebook
-            case "whatsapp.com":
+            case "whatsapp.com", "wa.me":
                 return .urlWhatsapp
             case "instagram.com":
                 return .urlInstagram

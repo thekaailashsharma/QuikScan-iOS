@@ -11,7 +11,7 @@ enum Images: String {
     case urlNone = "url_none"
     case urlLinkedIn = "url_linkedIN"
     case urlMedium = "url_medium"
-    case urlTwitter = "url_twitter"
+    case urlTwitter = "twitter"
     case urlGithub = "url_github"
     case urlFacebook = "url_facebook"
     case urlWhatsapp = "url_whatsapp"

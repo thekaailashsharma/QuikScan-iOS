@@ -22,5 +22,10 @@ class QrModel: Identifiable {
         self.type = type
     }
     
+    func contains(_ value: String) -> Bool {
+        name.range(of: value, options: .caseInsensitive) != nil ||
+        type.range(of: value, options: .caseInsensitive) != nil
+    }
+    
 }
 
