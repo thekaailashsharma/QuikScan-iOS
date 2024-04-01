@@ -90,6 +90,7 @@ struct ContactsView: View {
                         isVCardVisible = false
                     } label: {
                         Text("Cancel")
+                            .foregroundStyle(.red)
                     }
 
                 }
@@ -112,6 +113,7 @@ struct ContactsView: View {
                         isVCardVisible = false
                     } label: {
                         Text("Save")
+                            .foregroundStyle(.blue)
                     }
 
                 }

@@ -12,7 +12,6 @@ struct CameraView: UIViewRepresentable {
     let frameSize: CGSize
     @Binding var session: AVCaptureSession
     func makeUIView(context: Context) -> UIView {
-        let screenSize = UIScreen.main.bounds.size
         let view = UIViewType(frame: CGRect(origin: .zero, size: frameSize))
         view.backgroundColor = .clear
         

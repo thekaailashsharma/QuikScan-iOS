@@ -31,8 +31,10 @@ struct QuikScanApp: App {
     var body: some Scene {
         WindowGroup {
             NavigationStack {
-                //            ContentView()
-                FullScreenCameraView()
+                ContentView()
+                    .modelContainer(for: QrModel.self)
+                
+//                FullScreenCameraView()
                 //            ContactsView()
             }
         }

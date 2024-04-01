@@ -13,6 +13,8 @@ struct FullScreenCameraView: View {
     @StateObject private var cameraViewModel = CameraViewModel()
     @StateObject var qrDelegate = QrScannerDelegate()
     
+    @Environment(\.modelContext) private var modelContext
+    
     @State var session: AVCaptureSession = .init()
     @State var isScanning: Bool = false
     @State private var isSafariViewPresented = false
@@ -96,12 +98,17 @@ struct FullScreenCameraView: View {
                    resetVariables()
                 }
             }), content: {
-                if qrDelegate.scannedCode != nil {
+                if let scannedValue = qrDelegate.scannedCode {
                     if cameraViewModel.isValidURL(qrDelegate.scannedCode ?? "") {
                         if let url = URL(string: qrDelegate.scannedCode ?? "") {
                             SFSafariViewWrapper(url: url)
                                 .presentationDetents([.large, .medium], selection: $sheetSize)
                                 .ignoresSafeArea()
+                                .onAppear {
+                                    saveBarCode(item:
+                                                    QrModel(time: Date(), name: scannedValue, isUrl: true, url: scannedValue)
+                                    )
+                                }
                         }
                     }
                 }
@@ -115,6 +122,14 @@ struct FullScreenCameraView: View {
             }), content: {
                 PhoneView(phoneNumber: $phoneNumber)
                     .environmentObject(cameraViewModel)
+                    .onAppear {
+                        if let scannedValue = qrDelegate.scannedCode, let number = phoneNumber {
+                            saveBarCode(
+                                item: 
+                                    QrModel(time: Date(), name: scannedValue, isUrl: true, url: scannedValue)
+                            )
+                        }
+                    }
             })
         .popover(isPresented: Binding(
             get: { isTextViewPresented },
@@ -124,6 +139,13 @@ struct FullScreenCameraView: View {
                 }
             }), content: {
                 NonUrlView(text: $text)
+                    .onAppear {
+                        if let scannedValue = qrDelegate.scannedCode, let text = text  {
+                            saveBarCode(item: 
+                                            QrModel(time: Date(), name: scannedValue, isUrl: true, url: scannedValue)
+                            )
+                        }
+                    }
             })
         .popover(isPresented: Binding(
             get: { isEmailViewPresented },
@@ -133,6 +155,14 @@ struct FullScreenCameraView: View {
                 }
             }), content: {
                 EmailView(emailData: $email, isEmailViewVisible: $isEmailViewPresented)
+                    .onAppear {
+                        if let scannedValue = qrDelegate.scannedCode, let email = email  {
+                            saveBarCode(
+                                item:
+                                    QrModel(time: Date(), name: scannedValue, isUrl: true, url: scannedValue)
+                            )
+                        }
+                    }
             })
         .popover(isPresented: Binding(
             get: { isMessageViewPresented },
@@ -142,6 +172,14 @@ struct FullScreenCameraView: View {
                 }
             }), content: {
                 MessageView(messageData: $message, isSMSViewVisible: $isMessageViewPresented)
+                    .onAppear {
+                        if let scannedValue = qrDelegate.scannedCode, let message = message  {
+                            saveBarCode(
+                                item:
+                                    QrModel(time: Date(), name: scannedValue, isUrl: true, url: scannedValue)
+                            )
+                        }
+                    }
             })
         .fullScreenCover(isPresented: Binding(
             get: { isContactsViewPresented },
@@ -152,6 +190,14 @@ struct FullScreenCameraView: View {
             }), content: {
                 ContactsView(vCard: $vCard, isVCardVisible: $isContactsViewPresented)
                     .environmentObject(cameraViewModel)
+                    .onAppear {
+                        if let scannedValue = qrDelegate.scannedCode {
+                            saveBarCode(
+                                item: 
+                                    QrModel(time: Date(), name: scannedValue, isUrl: true, url: scannedValue)
+                            )
+                        }
+                    }
             })
         .onChange(of: qrDelegate.scannedCode, { oldValue, newValue in
             if qrDelegate.scannedCode != nil {
@@ -205,6 +251,38 @@ struct FullScreenCameraView: View {
         withAnimation(.bouncy(duration: 0.9).repeatForever(autoreverses: true)) {
             isScanning.toggle()
         }
+    }
+    
+    func getUrlType(from urlString: String) -> UrlTypes {
+        guard let url = URL(string: urlString) else {
+            return .none(URL(string: urlString)!)
+        }
+        
+        let domain = url.host ?? "".lowercased()
+        
+        switch domain {
+        case "linkedin.com":
+            return .linkedIn(url)
+        case "instagram.com":
+            return .instaGram(url)
+        case "facebook.com":
+            return .facebook(url)
+        case "twitter.com", "x.com":
+            return .twitter(url)
+        case "medium.com":
+            return .medium(url)
+        case "github.com":
+            return .github(url)
+        case "whatsapp.com", "wa.me":
+            return .whatsapp(url)
+        default:
+            return .none(url)
+        }
+    }
+
+    
+    func saveBarCode(item: QrModel) {
+        modelContext.insert(item)
     }
     
     func generateQRCode(from string: String) -> UIImage {
@@ -261,7 +339,12 @@ struct FullScreenCameraView: View {
                 cameraPermissions = .denied
             case .authorized:
                 cameraPermissions = .approved
-                setupCamera()
+                if session.inputs.isEmpty {
+                    setupCamera()
+                } else {
+                    session.startRunning()
+                }
+//                setupCamera()
             @unknown default:
                 break
             }

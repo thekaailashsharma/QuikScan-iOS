@@ -13,7 +13,7 @@ enum Permissions: String {
     case denied = "Access Denied"
 }
 
-enum QRCodeType {
+enum QRCodeType: Codable {
     case text(String)
     case url(URL)
     case vcard(VCard)
@@ -23,7 +23,7 @@ enum QRCodeType {
     case none
 }
 
-struct VCard {
+struct VCard: Codable {
     var fullName: String = ""
     var lastName: String = ""
     var firstName: String = ""
@@ -39,12 +39,12 @@ struct VCard {
     var urls: [URL] = []
 }
 
-struct SMSMessage {
+struct SMSMessage: Codable {
     var phoneNumber: String
     var message: String
 }
 
-struct Email {
+struct Email: Codable {
     var address: String
     var subject: String?
     var body: String?
