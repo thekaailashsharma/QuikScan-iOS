@@ -11,13 +11,15 @@ import SwiftUI
 
 struct ContentView: View {
     @StateObject var authManager = AuthManager()
+    @StateObject var cameraViewModel : CameraViewModel = CameraViewModel()
     @State var tabSelection: Tabs = .home
     var body: some View {
-        NavigationStack {
+//        NavigationStack {
             TabView(selection: $tabSelection) {
                 Group {
 //                    NavigationStack {
-                        HomeView()
+                    HomeView()
+                        .environmentObject(cameraViewModel)
                             .tabItem {
                                 Label("Tab 1", systemImage: tabSelection == .home ? "house.fill" : "house")
                                 
@@ -41,6 +43,7 @@ struct ContentView: View {
                     
 //                    NavigationStack {
                         FullScreenCameraView()
+                        .environmentObject(cameraViewModel)
                             .tabItem {
                                 Image(systemName: "camera.fill")
                                     .resizable()
@@ -50,11 +53,12 @@ struct ContentView: View {
                             .tag(Tabs.camera)
 //                    }
                 }
-                
                 .toolbarBackground(.ultraThinMaterial, for: .tabBar)
                 .toolbarBackground(.visible, for: .tabBar)
                 .toolbarColorScheme(.dark, for: .tabBar)
             }
+            .navigationTitle("Home")
+            .toolbar(tabSelection == .camera ? .hidden : .automatic, for: .automatic)
             .tint(.black)
             .onAppear {
                 authManager.getLoginStatus()
@@ -67,7 +71,7 @@ struct ContentView: View {
                 LoginView()
                     .environmentObject(authManager)
             })
-        }
+//        }
         .ignoresSafeArea()
     }
 }

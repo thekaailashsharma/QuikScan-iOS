@@ -190,4 +190,46 @@ class CameraViewModel: ObservableObject {
         }
     }
     
+    func getImage(for string: String) -> Images {
+        var temp = parseQRCode(string)
+        return parseImage(for: temp)
+    }
+    
+    private func parseImage(for qrCodeInfo: QRCodeInfo) -> Images {
+        switch qrCodeInfo.type {
+        case .url(let url):
+            switch url.host {
+            case "linkedin.com":
+                return .urlLinkedIn
+            case "medium.com":
+                return .urlMedium
+            case "twitter.com":
+                return .urlTwitter
+            case "github.com":
+                return .urlGithub
+            case "facebook.com":
+                return .urlFacebook
+            case "whatsapp.com":
+                return .urlWhatsapp
+            case "instagram.com":
+                return .urlInstagram
+            default:
+                return .urlNone
+            }
+        case .email:
+            return .barMail
+        case .phoneNumber:
+            return .barPhone
+        case .sms:
+            return .barSMS
+        case .vcard:
+            return .barvCard
+        case .text:
+            return .barText
+        default:
+            return .barCode
+        }
+    }
+
+    
 }

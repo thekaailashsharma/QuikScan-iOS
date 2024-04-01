@@ -10,7 +10,7 @@ import AVKit
 import CoreImage.CIFilterBuiltins
 
 struct FullScreenCameraView: View {
-    @StateObject private var cameraViewModel = CameraViewModel()
+    @EnvironmentObject private var cameraViewModel : CameraViewModel
     @StateObject var qrDelegate = QrScannerDelegate()
     
     @Environment(\.modelContext) private var modelContext
@@ -106,7 +106,7 @@ struct FullScreenCameraView: View {
                                 .ignoresSafeArea()
                                 .onAppear {
                                     saveBarCode(item:
-                                                    QrModel(time: Date(), name: scannedValue, isUrl: true, url: scannedValue)
+                                            QrModel(time: Date(), name: scannedValue, isPinned: false, type: scannedValue)
                                     )
                                 }
                         }
@@ -126,7 +126,7 @@ struct FullScreenCameraView: View {
                         if let scannedValue = qrDelegate.scannedCode, let number = phoneNumber {
                             saveBarCode(
                                 item: 
-                                    QrModel(time: Date(), name: scannedValue, isUrl: true, url: scannedValue)
+                                    QrModel(time: Date(), name: scannedValue, isPinned: false, type: scannedValue)
                             )
                         }
                     }
@@ -142,7 +142,7 @@ struct FullScreenCameraView: View {
                     .onAppear {
                         if let scannedValue = qrDelegate.scannedCode, let text = text  {
                             saveBarCode(item: 
-                                            QrModel(time: Date(), name: scannedValue, isUrl: true, url: scannedValue)
+                                            QrModel(time: Date(), name: scannedValue, isPinned: false, type: scannedValue)
                             )
                         }
                     }
@@ -159,7 +159,7 @@ struct FullScreenCameraView: View {
                         if let scannedValue = qrDelegate.scannedCode, let email = email  {
                             saveBarCode(
                                 item:
-                                    QrModel(time: Date(), name: scannedValue, isUrl: true, url: scannedValue)
+                                    QrModel(time: Date(), name: scannedValue, isPinned: false, type: scannedValue)
                             )
                         }
                     }
@@ -176,7 +176,7 @@ struct FullScreenCameraView: View {
                         if let scannedValue = qrDelegate.scannedCode, let message = message  {
                             saveBarCode(
                                 item:
-                                    QrModel(time: Date(), name: scannedValue, isUrl: true, url: scannedValue)
+                                    QrModel(time: Date(), name: scannedValue, isPinned: false, type: scannedValue)
                             )
                         }
                     }
@@ -194,7 +194,7 @@ struct FullScreenCameraView: View {
                         if let scannedValue = qrDelegate.scannedCode {
                             saveBarCode(
                                 item: 
-                                    QrModel(time: Date(), name: scannedValue, isUrl: true, url: scannedValue)
+                                    QrModel(time: Date(), name: scannedValue, isPinned: false, type: scannedValue)
                             )
                         }
                     }

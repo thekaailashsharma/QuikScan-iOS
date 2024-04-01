@@ -43,6 +43,8 @@
 		4A6B7A6D2BBA00F000293989 /* BarcodeTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A6B7A6C2BBA00F000293989 /* BarcodeTypes.swift */; };
 		4A6B7A702BBA1A6F00293989 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A6B7A6F2BBA1A6F00293989 /* HomeView.swift */; };
 		4A6B7A722BBA2A6F00293989 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A6B7A712BBA2A6F00293989 /* HomeViewModel.swift */; };
+		4AB762E32BBB30EE0043EFA8 /* StringExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AB762E22BBB30EE0043EFA8 /* StringExt.swift */; };
+		4AB762E52BBB41070043EFA8 /* DateExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AB762E42BBB41070043EFA8 /* DateExt.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -80,6 +82,8 @@
 		4A6B7A6C2BBA00F000293989 /* BarcodeTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeTypes.swift; sourceTree = "<group>"; };
 		4A6B7A6F2BBA1A6F00293989 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		4A6B7A712BBA2A6F00293989 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		4AB762E22BBB30EE0043EFA8 /* StringExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExt.swift; sourceTree = "<group>"; };
+		4AB762E42BBB41070043EFA8 /* DateExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExt.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -204,6 +208,8 @@
 			children = (
 				4A326AD92BB4BDA00069639B /* AllFonts.swift */,
 				4A326ADF2BB4CCF90069639B /* CountryCodes.swift */,
+				4AB762E22BBB30EE0043EFA8 /* StringExt.swift */,
+				4AB762E42BBB41070043EFA8 /* DateExt.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -347,6 +353,7 @@
 				4A326AB62BB489550069639B /* ContentView.swift in Sources */,
 				4A6B7A6B2BB9FEF100293989 /* QrModel.swift in Sources */,
 				4A6671BB2BB84ADD00F9B10F /* CameraModels.swift in Sources */,
+				4AB762E32BBB30EE0043EFA8 /* StringExt.swift in Sources */,
 				4A6671BD2BB8519C00F9B10F /* NonUrlView.swift in Sources */,
 				4A6671B82BB84A8100F9B10F /* CameraViewModel.swift in Sources */,
 				4A326AC92BB4ABDD0069639B /* LoginView.swift in Sources */,
@@ -358,6 +365,7 @@
 				4A010B422BB8744E0028A755 /* ContactsView.swift in Sources */,
 				4A27509F2BB7607000C22C9F /* QrScannerDelegate.swift in Sources */,
 				4A326AE02BB4CCF90069639B /* CountryCodes.swift in Sources */,
+				4AB762E52BBB41070043EFA8 /* DateExt.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
