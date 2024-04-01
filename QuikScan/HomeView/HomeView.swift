@@ -30,6 +30,11 @@ struct HomeView: View {
             }
             .scrollIndicators(.hidden)
             .searchable(text: $cameraViewModel.searchText, prompt: "Search Your Barcodes")
+            .overlay(content: {
+                if cameraViewModel.isSearching && !cameraViewModel.searchText.isEmpty && filteredItems.count == 0 {
+                    ContentUnavailableView.search
+                }
+            })
             .listRowSeparator(.hidden)
             .listRowBackground(Color.black.opacity(0.85))
             .listStyle(.sidebar)
@@ -76,6 +81,8 @@ struct HomeView: View {
 
 struct ItemView: View {
     @EnvironmentObject private var cameraViewModel : CameraViewModel
+    @Environment(\.isSearching) private var isSearching
+    
     let item: QrModel
     var onClick: () -> Void = {}
     @State var imageType: Images? = .barCode
@@ -197,6 +204,9 @@ struct ItemView: View {
         .buttonStyle(PlainButtonStyle())
         .onAppear {
             imageType = cameraViewModel.getImage(for: item.type)
+        }
+        .onChange(of: isSearching) { oldValue, newValue in
+            cameraViewModel.isSearching = isSearching
         }
     }
 }
