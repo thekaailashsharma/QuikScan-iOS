@@ -97,35 +97,36 @@ struct ItemView: View {
                         
                         switch image {
                         case .url:
-                            Text(item.name.truncate(length: 30))
+                            Text(item.name.urlTrim().truncate(length: 18))
                                 .foregroundStyle(.white)
                                 .font(.customFont(.poppins, size: 13))
                         case .linkedIn:
-                            Text(item.name.truncate(length: 30))
+                            Text(item.name.urlTrim().truncate(length: 18))
                                 .foregroundStyle(.white)
                                 .font(.customFont(.poppins, size: 13))
                         case .medium:
-                            Text(item.name.truncate(length: 30))
+                            Text(item.name.urlTrim().truncate(length: 18))
                                 .foregroundStyle(.white)
                                 .font(.customFont(.poppins, size: 13))
                         case .twitter:
-                            Text(item.name.truncate(length: 30))
+                            Text(item.name.urlTrim().truncate(length: 18))
                                 .foregroundStyle(.white)
                                 .font(.customFont(.poppins, size: 13))
                         case .urlGithub:
-                            Text(item.name.truncate(length: 30))
+                            Text(item.name.urlTrim().truncate(length: 18))
                                 .foregroundStyle(.white)
                                 .font(.customFont(.poppins, size: 13))
                         case .urlFacebook:
-                            Text(item.name.truncate(length: 30))
+                            Text(item.name.urlTrim().truncate(length: 18))
                                 .foregroundStyle(.white)
                                 .font(.customFont(.poppins, size: 15))
                         case .urlWhatsapp:
-                            Text(item.name.truncate(length: 30))
+                            Text(item.name.urlTrim().truncate(length: 18))
                                 .foregroundStyle(.white)
                                 .font(.customFont(.poppins, size: 13))
                         case .urlInstagram:
-                            Text(item.name.truncate(length: 30))            .foregroundStyle(.white)
+                            Text(item.name.urlTrim().truncate(length: 18))            
+                                .foregroundStyle(.white)
                                 .font(.customFont(.poppins, size: 13))
                         case .barMail:
                             if let mail = cameraViewModel.parseEmail(item.type) {
@@ -134,7 +135,7 @@ struct ItemView: View {
                                         RepeatedIconView(image: "person.fill", text: mail.address)
                                     }
                                     if mail.subject != "" {
-                                        RepeatedIconView(image: "mail.fill", text: mail.subject?.truncate(length: 30) ?? "")
+                                        RepeatedIconView(image: "mail.fill", text: mail.subject?.truncate(length: 18) ?? "")
                                     }
                                 }
                             }
@@ -145,12 +146,12 @@ struct ItemView: View {
                                         RepeatedIconView(image: "phone.fill", text: sms.phoneNumber)
                                     }
                                     if sms.message != "" {
-                                        RepeatedIconView(image: "message.fill", text: sms.message.truncate(length: 30))
+                                        RepeatedIconView(image: "message.fill", text: sms.message.truncate(length: 18))
                                     }
                                 }
                             }
                         case .barPhone:
-                            RepeatedIconView(image: "phone.fill", text: item.type)
+                            RepeatedIconView(image: "phone.fill", text: item.type.replacingOccurrences(of: "tel:", with: ""))
                         case .barvCard:
                             let vCard = cameraViewModel.parseVCard(item.type)
                             VStack(alignment: .listRowSeparatorLeading) {
@@ -163,17 +164,17 @@ struct ItemView: View {
                             }
                             
                         case .barText:
-                            Text(item.name.truncate(length: 30))
+                            Text(item.name.truncate(length: 18))
                                 .foregroundStyle(.white)
                                 .font(.customFont(.poppins, size: 13))
                         case .barCode:
-                            Text(item.name.truncate(length: 30))
+                            Text(item.name.truncate(length: 18))
                                 .foregroundStyle(.white)
                                 .font(.customFont(.poppins, size: 13))
                         }
                         
                     }
-                    .padding(.horizontal, 4)
+                    
                     
                     VStack {
                         HStack {
@@ -188,7 +189,6 @@ struct ItemView: View {
                             .buttonStyle(BorderedProminentButtonStyle())
                         }
                     }
-                    
                 }
             }
         }
@@ -215,7 +215,7 @@ struct RepeatedIconView : View {
             Text(text)
                 .lineLimit(1)
                 .foregroundStyle(.white.opacity(0.8))
-                .font(.customFont(.poppins, size: 10))
+                .font(.customFont(.poppins, size: 11))
         }
     }
 }
