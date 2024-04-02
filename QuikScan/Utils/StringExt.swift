@@ -17,6 +17,14 @@ extension String {
             .customTrim(["github.com/", "instagram.com/", "medium.com/", "wa.me/", "whatsapp.com/", "x.com/", "twitter.com/", "facebook.com/", "linkedin.com/"])
     }
     
+    func mailTrim() -> String {
+        guard let atIndex = self.firstIndex(of: "@") else {
+            return self
+        }
+        let username = self[..<atIndex]
+        return String(username)
+    }
+    
     func customTrim(_ prefixes: [String]) -> String {
         var result = self
         for pattern in prefixes {
@@ -30,6 +38,14 @@ extension String {
         } else {
             return self // Return the original string
         }
+    }
+    
+    func extractDomainFromEmail() -> String? {
+        guard let atIndex = self.firstIndex(of: "@") else {
+            return nil
+        }
+        let domain = self[self.index(after: atIndex)...]
+        return String(domain)
     }
     
 }

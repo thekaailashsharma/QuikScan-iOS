@@ -140,7 +140,7 @@ struct ItemView: View {
                             if let mail = cameraViewModel.parseEmail(item.type) {
                                 VStack(alignment: .listRowSeparatorLeading) {
                                     if mail.address != "" {
-                                        RepeatedIconView(image: "person.fill", text: mail.address)
+                                        RepeatedIconView(image: "person.fill", text: mail.address.mailTrim())
                                     }
                                     if mail.subject != "" {
                                         RepeatedIconView(image: "mail.fill", text: mail.subject?.truncate(length: 18) ?? "")
@@ -190,9 +190,18 @@ struct ItemView: View {
                             Button {
                                 
                             } label: {
-                                Text(image.rawValue)
-                                    .foregroundStyle(.primary)
-                                    .font(.customFont(.poppins, size: 10))
+                                
+                                if image == .barMail, let mail = cameraViewModel.parseEmail(item.type) {
+                                    Text(mail.address.extractDomainFromEmail() ?? "")
+                                        .foregroundStyle(.primary)
+                                        .font(.customFont(.poppins, size: 10))
+                                } else {
+                                    let _ = print("mail = Outside")
+                                    Text(image.rawValue)
+                                        .foregroundStyle(.primary)
+                                        .font(.customFont(.poppins, size: 10))
+                                }
+                               
                             }
                             .buttonStyle(BorderedProminentButtonStyle())
                         }
