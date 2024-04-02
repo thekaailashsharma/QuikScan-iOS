@@ -54,6 +54,24 @@ extension Dictionary where Key == String, Value == [QrModel] {
             return lhsDate.compare(rhsDate) == sortOrder
         }
     }
+    func sortedMyModelPin(by sortOrder: ComparisonResult) -> [(String, [QrModel])] {
+        return sorted { (lhs, rhs) -> Bool in
+            let lhsIsPinned = lhs.value.first?.isPinned ?? false
+            let rhsIsPinned = rhs.value.first?.isPinned ?? false
+            
+            // If both are pinned or both are not pinned, sort by time
+            if lhsIsPinned == rhsIsPinned {
+                let lhsDate = lhs.value.first?.time ?? Date()
+                let rhsDate = rhs.value.first?.time ?? Date()
+                return lhsDate.compare(rhsDate) == sortOrder
+            } else {
+                // Sort by isPinned
+                return lhsIsPinned && !rhsIsPinned
+            }
+        }
+    }
+    
+
 }
 
 

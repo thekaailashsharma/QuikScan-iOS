@@ -11,42 +11,158 @@ import SwiftData
 struct HomeView: View {
     
     @Query private var items: [QrModel]
+    @State private var isEditOpen: Bool = false
+    
+    @Environment(\.modelContext) private var modelContext
     
     @EnvironmentObject private var cameraViewModel : CameraViewModel
     
     var body: some View {
 
         NavigationStack {
-            List {
-                ForEach(groupedItems, id: \.0) { tuple in
-                    let timeAgo = tuple.0
-                    Section(header: Text(timeAgo)) {
-                        ForEach(tuple.1) { item in
-                            ItemView(item: item)
-                                .environmentObject(cameraViewModel)
+            
+            if filteredItems.count == 0 {
+                VStack {
+                    Image("quikscan")
+                        .resizable()
+                        .frame(width: 150, height: 150)
+                    Text("Find your Barcodes here")
+                        .font(.customFont(.poppins, size: 28))
+                        .foregroundStyle(.white)
+                        .padding(.bottom, 8)
+                    Text("We manage it for you")
+                        .font(.customFont(.angel, size: 21))
+                        .foregroundStyle(.white.opacity(0.6))
+                        .padding(.bottom, 8)
+                    
+                }
+            } else {
+                
+                List {
+                    if anyPins {
+                        Section {
+                            ForEach(filteredItems.filter({ model in
+                                model.isPinned == true
+                            })) { item in
+                                ItemView(item: item)
+                                    .environmentObject(cameraViewModel)
+                                    .swipeActions(edge: .leading) {
+                                        Button {
+                                            cameraViewModel.isEditOpen.toggle()
+                                            cameraViewModel.currentItem = item
+                                        } label: {
+                                            Label("Edit", systemImage: "pencil")
+                                        }
+                                        .tint(.indigo)
+                                    }
+                                    .swipeActions(edge: .trailing) {
+                                        //                                    let model: QrModel = item
+                                        Button {
+                                            cameraViewModel.currentPinItem = item
+                                            pinItem(model: item)
+                                            //                                        }
+                                        } label: {
+                                            Label("Pin", systemImage: pinStatus(model: item) ? "pin.fill" : "pin.slash.fill")
+                                        }
+                                        .tint(.blue)
+                                        
+                                        Button {
+                                            //                                        withAnimation {
+                                            modelContext.delete(item)
+                                            //                                        }
+                                        } label: {
+                                            Label("Delete", systemImage: "trash.fill")
+                                        }
+                                        .tint(.red)
+                                        
+                                        
+                                    }
+                            }
+                        } header: {
+                            Text("Pinned")
                         }
+                    }
+                    ForEach(groupedItems, id: \.0) { tuple in
+                        let timeAgo = tuple.0
+                        Section(header: Text(timeAgo)) {
+                            ForEach(tuple.1) { item in
+                                ItemView(item: item)
+                                    .environmentObject(cameraViewModel)
+                                    .swipeActions(edge: .leading) {
+                                        Button {
+                                            cameraViewModel.isEditOpen.toggle()
+                                            cameraViewModel.currentItem = item
+                                        } label: {
+                                            Label("Edit", systemImage: "pencil")
+                                        }
+                                        .tint(.indigo)
+                                    }
+                                    .swipeActions(edge: .trailing) {
+                                        //                                    let model: QrModel = item
+                                        Button {
+                                            cameraViewModel.currentPinItem = item
+                                            pinItem(model: item)
+                                            //                                        }
+                                        } label: {
+                                            Label("Pin", systemImage: pinStatus(model: item) ? "pin.slash.fill" : "pin.fill")
+                                        }
+                                        .tint(.blue)
+                                        
+                                        Button {
+                                            //                                        withAnimation {
+                                            modelContext.delete(item)
+                                            //                                        }
+                                        } label: {
+                                            Label("Delete", systemImage: "trash.fill")
+                                        }
+                                        .tint(.red)
+                                        
+                                        
+                                    }
+                            }
+                        }
+                        
+                    }
+                }
+                .fullScreenCover(isPresented: $cameraViewModel.isEditOpen, content: {
+                    FiltersView()
+                        .environmentObject(cameraViewModel)
+                })
+                .scrollIndicators(.hidden)
+                .searchable(text: $cameraViewModel.searchText, prompt: "Search Your Barcodes")
+                .overlay(content: {
+                    if cameraViewModel.isSearching && !cameraViewModel.searchText.isEmpty && filteredItems.count == 0 {
+                        ContentUnavailableView.search
+                    }
+                })
+                .listRowSeparator(.hidden)
+                .listRowBackground(Color.black.opacity(0.85))
+                .listStyle(.sidebar)
+                .toolbar {
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Image(systemName: "line.3.horizontal.decrease.circle.fill")
+                            .resizable()
+                            .frame(width: 20, height: 20)
+                            .foregroundStyle(.blue)
                     }
                 }
             }
-            .scrollIndicators(.hidden)
-            .searchable(text: $cameraViewModel.searchText, prompt: "Search Your Barcodes")
-            .overlay(content: {
-                if cameraViewModel.isSearching && !cameraViewModel.searchText.isEmpty && filteredItems.count == 0 {
-                    ContentUnavailableView.search
-                }
-            })
-            .listRowSeparator(.hidden)
-            .listRowBackground(Color.black.opacity(0.85))
-            .listStyle(.sidebar)
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Image(systemName: "line.3.horizontal.decrease.circle.fill")
-                        .resizable()
-                        .frame(width: 20, height: 20)
-                        .foregroundStyle(.blue)
-                }
-            }
         }
+    }
+    
+    func pinStatus(model: QrModel) -> Bool {
+        return model.isPinned == true
+    }
+    
+    func pinItem(model: QrModel?) {
+        if let model {
+            model.isPinned?.toggle()
+            try? modelContext.save()
+        }
+    }
+    
+    var anyPins: Bool {
+        return filteredItems.contains{$0.isPinned == true}
     }
     
     var filteredItems: [QrModel] {
@@ -63,8 +179,8 @@ struct HomeView: View {
     var groupedItems: [(String, [QrModel])] {
         var result: [String: [QrModel]] = [:]
         print("Okk \(filteredItems.debugDescription)")
-        for item in filteredItems.sorted(by: { lhs, rhs in
-            lhs.time > rhs.time
+        for item in filteredItems.filter({ model in
+            model.isPinned != true
         }) {
             print("Okk1 \(item.time.formatted(date: .numeric, time: .shortened))")
             let timeAgo = item.time.getTimeAgo()
@@ -74,7 +190,7 @@ struct HomeView: View {
             }
             result[timeAgo]?.append(item)
         }
-        return result.sortedMyModel(by: .orderedDescending)
+        return result.sortedMyModelPin(by: .orderedDescending)
     }
 }
 
@@ -179,6 +295,8 @@ struct ItemView: View {
                             Text(item.name.truncate(length: 18))
                                 .foregroundStyle(.white)
                                 .font(.customFont(.poppins, size: 13))
+                        default:
+                            EmptyView()
                         }
                         
                     }
@@ -212,11 +330,61 @@ struct ItemView: View {
         .frame(height: 70)
         .buttonStyle(PlainButtonStyle())
         .onAppear {
-            imageType = cameraViewModel.getImage(for: item.type)
+            if item.isEdited == true {
+                imageType = Images.fromString(item.imageName ?? "")
+            } else {
+                imageType = cameraViewModel.getImage(for: item.type)
+            }
         }
         .onChange(of: isSearching) { oldValue, newValue in
             cameraViewModel.isSearching = isSearching
         }
+    }
+}
+
+
+struct RepeatedIconTextView : View {
+    var header: String
+    var text: String
+    @State var data: String = ""
+    @FocusState var isActive: Bool
+    var body: some View {
+        VStack {
+            HStack {
+                Text(header)
+                    .font(.customFont(.poppins, size: 15))
+                    .foregroundStyle(.white)
+                Spacer()
+            }
+            .padding()
+            
+            TextField(text: $data) {
+                Text(header)
+                    .font(.customFont(.poppins, size: 15))
+                    .padding()
+            }
+            .submitLabel(.continue)
+            .font(.customFont(.poppins, size: 18))
+            .focused($isActive)
+            .onSubmit {
+                withAnimation {
+                    isActive.toggle()
+                }
+            }
+            .foregroundStyle(.white)
+            .padding()
+            .background(.black.opacity(0.6))
+            .clipShape(RoundedRectangle(cornerRadius: 20))
+            .overlay {
+                RoundedRectangle(cornerRadius: 20)
+                    .stroke(.white.opacity(0.5))
+            }
+            
+        }
+        .onAppear {
+            data = text
+        }
+        .padding()
     }
 }
 
@@ -237,5 +405,14 @@ struct RepeatedIconView : View {
                 .foregroundStyle(.white.opacity(0.8))
                 .font(.customFont(.poppins, size: 11))
         }
+    }
+}
+
+struct FavIcon {
+    enum Size: Int, CaseIterable { case s = 16, m = 32, l = 64, xl = 128, xxl = 256, xxxl = 512 }
+    private let domain: String
+    init(_ domain: String) { self.domain = domain }
+    subscript(_ size: Size) -> String {
+        "https://www.google.com/s2/favicons?sz=\(size.rawValue)&domain=\(domain)"
     }
 }

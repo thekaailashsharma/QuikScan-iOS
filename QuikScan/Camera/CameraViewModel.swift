@@ -16,6 +16,12 @@ class CameraViewModel: ObservableObject {
     @Published var searchText: String = ""
     @Published var isSearching: Bool = false
     
+    @Published var currentItem: QrModel? = nil
+    @Published var currentPinItem: QrModel? = nil
+    @Published var isEditOpen: Bool = false
+    @Published var name: String = ""
+    @Published var data: String = ""
+    
     func parseQRCode(_ data: String) -> QRCodeInfo {
         if data.hasPrefix("BEGIN:VCARD") && data.contains("END:VCARD") {
             // Parse vCard
