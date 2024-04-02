@@ -31,7 +31,7 @@ struct HomeView: View {
                         .foregroundStyle(.white)
                         .padding(.bottom, 8)
                     Text("We manage it for you")
-                        .font(.customFont(.angel, size: 21))
+                        .font(.customFont(.angel, size: 28))
                         .foregroundStyle(.white.opacity(0.6))
                         .padding(.bottom, 8)
                     
@@ -140,9 +140,17 @@ struct HomeView: View {
                 .listStyle(.sidebar)
                 .toolbar {
                     ToolbarItem(placement: .topBarTrailing) {
-                        Image(systemName: "line.3.horizontal.decrease.circle.fill")
+                        Image(systemName: "line.3.horizontal.decrease.circle")
                             .resizable()
-                            .frame(width: 20, height: 20)
+                            .frame(width: 30, height: 30)
+                            .foregroundStyle(.white)
+                    }
+                    
+                    ToolbarItem(placement: .topBarLeading) {
+                        Image("quikscan")
+//                            .renderingMode(.template)
+                            .resizable()
+                            .frame(width: 30, height: 30)
                             .foregroundStyle(.blue)
                     }
                 }

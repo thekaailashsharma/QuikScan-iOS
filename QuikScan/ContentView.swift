@@ -17,31 +17,16 @@ struct ContentView: View {
 //        NavigationStack {
             TabView(selection: $tabSelection) {
                 Group {
-//                    NavigationStack {
                     HomeView()
                         .environmentObject(cameraViewModel)
                             .tabItem {
-                                Label("Tab 1", systemImage: tabSelection == .home ? "house.fill" : "house")
-                                
-                                   
-                               
+                                Image(systemName: "house.fill")
+                                    .resizable()
+                                    .frame(width: 10, height: 10)
+                                    .foregroundStyle(.primary)
                             }
                             .tag(Tabs.home)
-//                    }
-                    
-//                    NavigationStack {
-                        Text("Maps")
-                            .tabItem {
-                                Image(systemName: tabSelection == .home ? "location.north" : "location.north.fill")
-                                    .resizable()
-                                    .frame(width: 50, height: 50)
-                                    .foregroundStyle(.white)
-                                
-                            }
-                            .tag(Tabs.maps)
-//                    }
-                    
-//                    NavigationStack {
+
                         FullScreenCameraView()
                         .environmentObject(cameraViewModel)
                             .tabItem {
@@ -51,13 +36,22 @@ struct ContentView: View {
                                     .foregroundStyle(.primary)
                             }
                             .tag(Tabs.camera)
-//                    }
+                    
+                    Text("Create")
+                        .tabItem {
+                            Image(systemName: "macwindow.badge.plus")
+                                .resizable()
+                                .frame(width: 50, height: 50)
+                                .foregroundStyle(.white)
+                            
+                        }
+                        .tag(Tabs.maps)
                 }
                 .toolbarBackground(.ultraThinMaterial, for: .tabBar)
                 .toolbarBackground(.visible, for: .tabBar)
                 .toolbarColorScheme(.dark, for: .tabBar)
             }
-            .navigationTitle("Home")
+            .navigationTitle("QuikScan")
             .toolbar(tabSelection == .camera ? .hidden : .automatic, for: .automatic)
             .tint(.black)
             .onAppear {
