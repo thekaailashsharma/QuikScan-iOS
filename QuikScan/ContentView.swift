@@ -37,7 +37,7 @@ struct ContentView: View {
                             }
                             .tag(Tabs.camera)
                     
-                    Text("Create")
+                    CreateView()
                         .tabItem {
                             Image(systemName: "macwindow.badge.plus")
                                 .resizable()
@@ -45,13 +45,13 @@ struct ContentView: View {
                                 .foregroundStyle(.white)
                             
                         }
-                        .tag(Tabs.maps)
+                        .tag(Tabs.create)
                 }
                 .toolbarBackground(.ultraThinMaterial, for: .tabBar)
                 .toolbarBackground(.visible, for: .tabBar)
                 .toolbarColorScheme(.dark, for: .tabBar)
             }
-            .navigationTitle("QuikScan")
+            .navigationTitle(tabSelection == .create ? "Create" : "QuikScan")
             .toolbar(tabSelection == .camera ? .hidden : .automatic, for: .automatic)
             .tint(.black)
             .onAppear {
@@ -70,8 +70,17 @@ struct ContentView: View {
     }
 }
 
+struct CreateView: View {
+    var body: some View {
+        NavigationStack {
+            Text("Create")
+                .navigationTitle("Create")
+        }
+    }
+}
+
 enum Tabs {
-    case home, camera, maps
+    case home, camera, create
 }
 
 #Preview {
