@@ -13,29 +13,34 @@ struct ContentView: View {
     @StateObject var authManager = AuthManager()
     @StateObject var cameraViewModel : CameraViewModel = CameraViewModel()
     @State var tabSelection: Tabs = .home
+    @State var scale: CGFloat = 1.0
+    @State var launchVisible: Bool = true
     var body: some View {
-//        NavigationStack {
+        if launchVisible {
+            LaunchScreen(scale: $scale, isVisible: $launchVisible)
+        } else {
+            //        NavigationStack {
             TabView(selection: $tabSelection) {
                 Group {
                     HomeView()
                         .environmentObject(cameraViewModel)
-                            .tabItem {
-                                Image(systemName: "house.fill")
-                                    .resizable()
-                                    .frame(width: 10, height: 10)
-                                    .foregroundStyle(.primary)
-                            }
-                            .tag(Tabs.home)
-
-                        FullScreenCameraView()
+                        .tabItem {
+                            Image(systemName: "house.fill")
+                                .resizable()
+                                .frame(width: 10, height: 10)
+                                .foregroundStyle(.primary)
+                        }
+                        .tag(Tabs.home)
+                    
+                    FullScreenCameraView()
                         .environmentObject(cameraViewModel)
-                            .tabItem {
-                                Image(systemName: "camera.fill")
-                                    .resizable()
-                                    .frame(width: 50, height: 50)
-                                    .foregroundStyle(.primary)
-                            }
-                            .tag(Tabs.camera)
+                        .tabItem {
+                            Image(systemName: "camera.fill")
+                                .resizable()
+                                .frame(width: 50, height: 50)
+                                .foregroundStyle(.primary)
+                        }
+                        .tag(Tabs.camera)
                     
                     ViewQr(qrCodeValue: "")
                         .tabItem {
@@ -65,8 +70,9 @@ struct ContentView: View {
                 LoginView()
                     .environmentObject(authManager)
             })
-//        }
-        .ignoresSafeArea()
+            //        }
+            .ignoresSafeArea()
+        }
     }
 }
 

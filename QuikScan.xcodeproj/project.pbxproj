@@ -50,6 +50,7 @@
 		4ADB3FC92BBDC8DA0050B539 /* QRCodeDetector in Frameworks */ = {isa = PBXBuildFile; productRef = 4ADB3FC82BBDC8DA0050B539 /* QRCodeDetector */; };
 		4ADB3FCA2BBDC8DA0050B539 /* QRCodeDetector in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 4ADB3FC82BBDC8DA0050B539 /* QRCodeDetector */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		4ADB3FCC2BBDC8DA0050B539 /* QRCodeStatic in Frameworks */ = {isa = PBXBuildFile; productRef = 4ADB3FCB2BBDC8DA0050B539 /* QRCodeStatic */; };
+		4ADB3FD12BBDEDC10050B539 /* LaunchScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ADB3FD02BBDEDC10050B539 /* LaunchScreen.swift */; };
 		4AEC45A62BBC757F0017412C /* FiltersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AEC45A52BBC757F0017412C /* FiltersView.swift */; };
 /* End PBXBuildFile section */
 
@@ -105,6 +106,7 @@
 		4AB762E22BBB30EE0043EFA8 /* StringExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExt.swift; sourceTree = "<group>"; };
 		4AB762E42BBB41070043EFA8 /* DateExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExt.swift; sourceTree = "<group>"; };
 		4ADB3FB82BBDBBD20050B539 /* ViewQr.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewQr.swift; sourceTree = "<group>"; };
+		4ADB3FD02BBDEDC10050B539 /* LaunchScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchScreen.swift; sourceTree = "<group>"; };
 		4AEC45A52BBC757F0017412C /* FiltersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FiltersView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -182,6 +184,7 @@
 			isa = PBXGroup;
 			children = (
 				4A326AD52BB4BCDA0069639B /* Info.plist */,
+				4ADB3FCD2BBDED8A0050B539 /* Launch */,
 				4ADB3FB72BBDBBB00050B539 /* ViewQr */,
 				4A6B7A6E2BBA1A4D00293989 /* HomeView */,
 				4A6B7A692BB9FE9800293989 /* SwiftData */,
@@ -290,6 +293,14 @@
 			path = ViewQr;
 			sourceTree = "<group>";
 		};
+		4ADB3FCD2BBDED8A0050B539 /* Launch */ = {
+			isa = PBXGroup;
+			children = (
+				4ADB3FD02BBDEDC10050B539 /* LaunchScreen.swift */,
+			);
+			path = Launch;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -393,6 +404,7 @@
 				4A326AB62BB489550069639B /* ContentView.swift in Sources */,
 				4A6B7A6B2BB9FEF100293989 /* QrModel.swift in Sources */,
 				4A6671BB2BB84ADD00F9B10F /* CameraModels.swift in Sources */,
+				4ADB3FD12BBDEDC10050B539 /* LaunchScreen.swift in Sources */,
 				4AB762E32BBB30EE0043EFA8 /* StringExt.swift in Sources */,
 				4A6671BD2BB8519C00F9B10F /* NonUrlView.swift in Sources */,
 				4A6671B82BB84A8100F9B10F /* CameraViewModel.swift in Sources */,
