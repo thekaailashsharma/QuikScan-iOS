@@ -189,8 +189,24 @@ struct FiltersView: View {
                             EmptyView()
                         }
                         
+                        
+                        
                     }
                 }
+                
+                HStack {
+                    NavigationLink {
+                        ViewQr(qrCodeValue: cameraViewModel.currentItem?.type ?? "")
+                    } label: {
+                        Text("View QR")
+                            .font(.customFont(.poppins, size: 20))
+                            .foregroundStyle(.blue.opacity(1))
+                            .padding()
+                    }
+                }
+                
+                
+
                 
                 
                 Spacer()
@@ -218,7 +234,9 @@ struct FiltersView: View {
 
                 }
             }
+            
         }
+        .tint(.blue)
         .onAppear {
             if let item = cameraViewModel.currentItem {
                 name = item.name

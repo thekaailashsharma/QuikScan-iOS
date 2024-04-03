@@ -37,7 +37,7 @@ struct ContentView: View {
                             }
                             .tag(Tabs.camera)
                     
-                    CreateView()
+                    ViewQr(qrCodeValue: "")
                         .tabItem {
                             Image(systemName: "macwindow.badge.plus")
                                 .resizable()
@@ -67,15 +67,6 @@ struct ContentView: View {
             })
 //        }
         .ignoresSafeArea()
-    }
-}
-
-struct CreateView: View {
-    var body: some View {
-        NavigationStack {
-            Text("Create")
-                .navigationTitle("Create")
-        }
     }
 }
 
