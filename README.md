@@ -1,5 +1,5 @@
 
-<h1 align="center">  Tripify 🏴‍☠️ </h1> <br>
+<h1 align="center">  QuikScan 🏴‍☠️ </h1> <br>
 <p align="center">
   <a href="https://github.com/thekaailashsharma/QuikScan-iOS/assets/61358755/a3bcb65a-5281-46e7-8364-b29f7e21944e">
     <img src="https://github.com/thekaailashsharma/QuikScan-iOS/assets/61358755/a3bcb65a-5281-46e7-8364-b29f7e21944e" alt="HiewAF9.md.png" border="0">
