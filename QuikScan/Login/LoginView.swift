@@ -159,17 +159,11 @@ struct EnterPhoneNumber: View {
                             .padding()
                     })
                     .submitLabel(.continue)
-                    .keyboardType(.numberPad)
+                    .keyboardType(.default)
                     .focused($isNumberActive)
-                    .toolbar {
-                        ToolbarItemGroup(placement: .keyboard) {
-                            Spacer()
-                            
-                            Button("Done") {
-                                isNumberActive = false
-                                onClick()
-                            }
-                        }
+                    .onSubmit {
+                        isNumberActive.toggle()
+                        onClick()
                     }
                     .font(.customFont(.poppins, size: 18))
                     .foregroundStyle(.white)
@@ -192,16 +186,11 @@ struct EnterPhoneNumber: View {
                             .padding()
                     })
                     .submitLabel(.go)
+                    .keyboardType(.default)
                     .focused($isOTPActive)
-                    .toolbar {
-                        ToolbarItemGroup(placement: .keyboard) {
-                            Spacer()
-                            
-                            Button("Done") {
-                                isOTPActive = false
-                                onClick()
-                            }
-                        }
+                    .onSubmit {
+                        isOTPActive.toggle()
+                        onClick()
                     }
                     .font(.customFont(.poppins, size: 18))
                     .keyboardType(.numberPad)

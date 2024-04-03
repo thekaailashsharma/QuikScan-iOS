@@ -33,14 +33,15 @@ class AuthManager : ObservableObject {
     public func signOut() {
         try? Auth.auth().signOut()
         getLoginStatus()
+        isLoggedIn = true
     }
     
     public func getLoginStatus() {
         if Auth.auth().currentUser == nil {
-            print("Login Status = \(isLoggedIn)")
+            print("Login Status = \(Auth.auth().currentUser)")
             isLoggedIn = true
         } else {
-            print("Login Status = \(isLoggedIn)")
+            print("Login Status = \(Auth.auth().currentUser)")
             isLoggedIn = false
         }
     }

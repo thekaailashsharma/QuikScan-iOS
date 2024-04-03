@@ -26,6 +26,7 @@ struct ContentView: View {
                 Group {
                     HomeView()
                         .environmentObject(cameraViewModel)
+                        .environmentObject(authManager)
                         .tabItem {
                             Image(systemName: "house.fill")
                                 .resizable()

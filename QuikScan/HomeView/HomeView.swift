@@ -12,10 +12,12 @@ struct HomeView: View {
     
     @Query private var items: [QrModel]
     @State private var isEditOpen: Bool = false
+    @State private var isLogoutOpen: Bool = false
     
     @Environment(\.modelContext) private var modelContext
     
     @EnvironmentObject private var cameraViewModel : CameraViewModel
+    @EnvironmentObject var authManager: AuthManager
     
     var body: some View {
 
@@ -152,8 +154,32 @@ struct HomeView: View {
                             .resizable()
                             .frame(width: 30, height: 30)
                             .foregroundStyle(.blue)
+                            .onTapGesture {
+                                isLogoutOpen.toggle()
+                            }
                     }
                 }
+                .sheet(isPresented: $isLogoutOpen, content: {
+                    VStack {
+                        Button(action: {
+                            authManager.signOut()
+                        }, label: {
+                            Text("LogOut")
+                                .foregroundStyle(.white)
+                                .font(.customFont(.poppins, size: 20))
+                        })
+                        .frame(width: 200, height: 25)
+                        .padding()
+                        .background(.blue.opacity(0.85))
+                        .clipShape(RoundedRectangle(cornerRadius: 15))
+                    }
+                    .frame(height: 200)
+                    .presentationDetents([.height(200)])
+                })
+                .fullScreenCover(isPresented: $authManager.isLoggedIn, content: {
+                    LoginView()
+                        .environmentObject(authManager)
+                })
             }
         }
     }
