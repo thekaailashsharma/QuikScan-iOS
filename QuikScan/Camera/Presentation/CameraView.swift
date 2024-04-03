@@ -15,7 +15,7 @@ struct FullScreenCameraView: View {
     
     @Environment(\.modelContext) private var modelContext
     
-    @State var session: AVCaptureSession = .init()
+    @Binding var session: AVCaptureSession
     @State var isScanning: Bool = false
     @State private var isSafariViewPresented = false
     @State private var isSafariViewAnimation = false
@@ -353,6 +353,6 @@ struct FullScreenCameraView: View {
     
 }
 
-#Preview {
-    FullScreenCameraView()
-}
+//#Preview {
+//    FullScreenCameraView()
+//}

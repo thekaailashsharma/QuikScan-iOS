@@ -6,10 +6,12 @@
 //
 
 import SwiftUI
+import AVKit
 
 
 
 struct ContentView: View {
+    @State var session: AVCaptureSession = .init()
     @StateObject var authManager = AuthManager()
     @StateObject var cameraViewModel : CameraViewModel = CameraViewModel()
     @State var tabSelection: Tabs = .home
@@ -29,10 +31,13 @@ struct ContentView: View {
                                 .resizable()
                                 .frame(width: 10, height: 10)
                                 .foregroundStyle(.primary)
+                                .onTapGesture {
+                                    session.stopRunning()
+                                }
                         }
                         .tag(Tabs.home)
                     
-                    FullScreenCameraView()
+                    FullScreenCameraView(session: $session)
                         .environmentObject(cameraViewModel)
                         .tabItem {
                             Image(systemName: "camera.fill")
@@ -48,6 +53,9 @@ struct ContentView: View {
                                 .resizable()
                                 .frame(width: 50, height: 50)
                                 .foregroundStyle(.white)
+                                .onTapGesture {
+                                    session.stopRunning()
+                                }
                             
                         }
                         .tag(Tabs.create)
@@ -56,6 +64,11 @@ struct ContentView: View {
                 .toolbarBackground(.visible, for: .tabBar)
                 .toolbarColorScheme(.dark, for: .tabBar)
             }
+            .onChange(of: tabSelection, { old, new in
+                if tabSelection != .camera {
+                    session.stopRunning()
+                }
+            })
             .navigationTitle(tabSelection == .create ? "Create" : "QuikScan")
             .toolbar(tabSelection == .camera ? .hidden : .automatic, for: .automatic)
             .tint(.black)
